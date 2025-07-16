@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 
 import Home from "./pages/Home";
-import Events from "./pages/Events";
+import Events, { loader as eventsLoader } from "./pages/Events";
 import EventDetail from "./pages/EventDetail";
 import NewEvent from "./pages/NewEvent";
 import EditEvent from "./pages/EditEvent";
@@ -26,20 +26,12 @@ function App() {
           element: <EventsRoot />,
           children: [
             //loader executes this function when we are about to visite this route
+            //needs to first fetch, and only after fetch srender compopnent with already fullfield data.
             {
               path: "",
               element: <Events />,
-              loader: async () => {
-                const response = await fetch("http://localhost:8080/events");
-
-                if (!response.ok) {
-                  //...
-                } else {
-                  const resData = await response.json();
-                  return resData;
-                }
-              },
-
+              //we cant access data from higher level
+              loader: eventsLoader,
               //react automaticly make data returned by this fucntion availible for this route
             },
             { path: ":eventId", element: <EventDetail /> },
