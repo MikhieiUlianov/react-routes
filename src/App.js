@@ -9,7 +9,7 @@ import {
 
 import Home from "./pages/Home";
 import Events, { loader as eventsLoader } from "./pages/Events";
-import EventDetail from "./pages/EventDetail";
+import EventDetail, { loader as eventDetailLoader } from "./pages/EventDetail";
 import NewEvent from "./pages/NewEvent";
 import EditEvent from "./pages/EditEvent";
 import Root from "./pages/Root";
@@ -27,20 +27,16 @@ function App() {
           path: "events",
           element: <EventsRoot />,
           children: [
-            //--loader executes this function when we are about to visite this route, before component render.
-            //at this moment, we are not navigated to another page,
-            //instead, we wait until the data will be fetched, on the page we were in this moment.
-            //that is why we dont need to think about loading status
-
-            //--needs to first fetch, and only after fetch srender compopnent with already fullfield data.
             {
               path: "",
               element: <Events />,
-              //we cant access data from higher level
               loader: eventsLoader,
-              //react automaticly make data returned by this fucntion availible for this route
             },
-            { path: ":eventId", element: <EventDetail /> },
+            {
+              path: ":eventId",
+              element: <EventDetail />,
+              loader: eventDetailLoader,
+            },
             { path: "new", element: <NewEvent /> },
             { path: ":eventId/edit", element: <EditEvent /> },
           ],
