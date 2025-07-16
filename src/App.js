@@ -34,11 +34,22 @@ function App() {
             },
             {
               path: ":eventId",
-              element: <EventDetail />,
+              //--only works if the route that defines the loader also defines an element.
+              //otherwise chidren element will not automaticly get access to the loader from parent element.
+              //in such a case we can define id and use "useRouteLoaderData" hook.
+
               loader: eventDetailLoader,
+              id: "event-detail",
+              //--we can use this nested routs feature not only to make some wrapper, but also to share data
+              children: [
+                {
+                  index: true,
+                  element: <EventDetail />,
+                },
+                { path: "edit", element: <EditEvent /> },
+              ],
             },
             { path: "new", element: <NewEvent /> },
-            { path: ":eventId/edit", element: <EditEvent /> },
           ],
         },
       ],
