@@ -9,6 +9,7 @@ function EventForm({ method, event }) {
   }
 
   return (
+    //"action='some/route'" needs if we wanna pass action data to another route
     <Form method="post" className={classes.form}>
       <p>
         <label htmlFor="title">Title</label>
